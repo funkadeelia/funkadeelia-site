@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>funkadeelia.co.uk</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      color: #111;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .domain {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: #111;
+    }
+
+    .dot { color: #bbb; }
+
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: #ddd;
+      margin: 1.8rem auto;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #999;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 2rem;
+      font-size: 0.75rem;
+      color: #ccc;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="domain">funkadeelia<span class="dot">.co.uk</span></div>
+    <div class="divider"></div>
+    <div class="tagline">Coming Soon</div>
+  </div>
+  <div class="footer">something's brewing</div>
+</body>
+</html>
