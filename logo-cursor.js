@@ -35,7 +35,9 @@
       ' filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22)); }' +
       '.fk-pointer__outer { position: relative; width: ' + CFG.size + 'px; height: ' + CFG.size + 'px;' +
       ' border-radius: 0 50% 50% 50%; background: ' + CFG.ink + '; }' +
-      '.fk-pointer__inner { position: absolute; right: 5%; bottom: 5%; width: 78%; height: 78%;' +
+      // the logo turned 180°: square corner = the tip; thin (10%) along the corner edges,
+      // thick (25%) round the curve, as in the logo
+      '.fk-pointer__inner { position: absolute; left: 10%; top: 10%; width: 65%; height: 65%;' +
       ' border-radius: 0 50% 50% 50%; background: ' + CFG.fill + '; }';
     document.head.appendChild(style);
 
