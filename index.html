@@ -34,6 +34,15 @@
 
     .dot { color: #bbb; }
 
+    /* the logo standing in for each "a": same height as the letters' x-height */
+    .a-logo {
+      display: inline-block;
+      width: 0.56em;
+      height: 0.56em;
+      margin: 0 0.02em;
+      vertical-align: -0.012em;
+    }
+
     .divider {
       width: 40px;
       height: 1px;
@@ -60,7 +69,7 @@
 </head>
 <body>
   <div class="container">
-    <div class="domain">funkadeelia<span class="dot">.co.uk</span></div>
+    <h1 class="domain" aria-label="funkadeelia.co.uk"><span aria-hidden="true">funk<svg class="a-logo" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M0 50A50 50 0 0 1 50 0A50 50 0 0 1 100 50L100 100L50 100A50 50 0 0 1 0 50Z M25 57.5A32.5 32.5 0 0 1 57.5 25A32.5 32.5 0 0 1 90 57.5L90 90L57.5 90A32.5 32.5 0 0 1 25 57.5Z"/></svg>deeli<svg class="a-logo" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path fill="currentColor" fill-rule="evenodd" d="M0 50A50 50 0 0 1 50 0A50 50 0 0 1 100 50L100 100L50 100A50 50 0 0 1 0 50Z M25 57.5A32.5 32.5 0 0 1 57.5 25A32.5 32.5 0 0 1 90 57.5L90 90L57.5 90A32.5 32.5 0 0 1 25 57.5Z"/></svg><span class="dot">.co.uk</span></span></h1>
     <div class="divider"></div>
     <div class="tagline">Coming Soon.</div>
   </div>
