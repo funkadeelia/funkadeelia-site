@@ -1,8 +1,9 @@
 /*
  * funkadeelia logo pointer
- * A weighted pendulum hung from the pointer's tip: it fades in when the mouse
- * moves, trails and swings with direction changes, and rocks to a stop and
- * fades out when the mouse stops. Skipped on touch screens and for visitors
+ * The logo hangs from the mouse by its pointed corner like a weight: gravity
+ * pulls the thick curve straight down, so at rest the corner points up. It
+ * fades in when the mouse moves, lags and swings as the mouse drags it around,
+ * and rocks to a stop and fades out when the mouse stops. Skipped on touch screens and for visitors
  * who ask their device to reduce motion; they keep the normal cursor.
  */
 (function () {
@@ -12,19 +13,19 @@
 
   var CFG = {
     size: 18,           // px: about the size of the 'a' in the wordmark
-    weight: 1,          // gravity: how strongly it returns to rest
-    arm: 60,            // px: longer = slower, lazier swing
-    drag: 0.12,         // how far it trails behind while moving
+    weight: 1.2,        // gravity: how strongly it hangs down
+    arm: 75,            // px: longer = slower, lazier swing
+    drag: 0.15,         // how far it trails behind while moving
     damping: 0.025,     // swing loss while moving
     settleDamping: 0.07,// swing loss once stopped
     stopDelay: 140,     // ms without movement that counts as stopped
     fadeHold: 180,      // ms after stopping before the fade starts
-    fadeOut: 0.08,      // fade-out speed per frame
+    fadeOut: 0.1,       // fade-out speed per frame
     ink: '#111111',     // outline: matches the wordmark
     fill: '#FFFFFF'
   };
 
-  var REST = Math.PI / 4; // weight hangs down-right: the normal pointer pose
+  var REST = Math.PI / 2; // weight hangs straight down, corner pointing up
 
   function init() {
     var style = document.createElement('style');
@@ -58,6 +59,13 @@
     var mode = 'hidden', lastMove = 0, settleStart = 0;
     var running = false, prevNow = 0;
 
+    function draw() {
+      el.style.opacity = op.toFixed(3);
+      // the drawn shape has its weight down-right (45°) from the tip; turn it to theta
+      el.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) rotate(' +
+        (theta * 180 / Math.PI - 45).toFixed(2) + 'deg)';
+    }
+
     function step() {
       var L = CFG.arm;
       var damp = mode === 'settling' ? CFG.settleDamping : CFG.damping;
@@ -67,11 +75,11 @@
       var a = { x: nv.x - vs.x, y: nv.y - vs.y };
       vs = nv;
       var s = Math.sin(theta), c = Math.cos(theta);
-      var alpha = (CFG.weight / L) * Math.sin(REST - theta) // gravity back to rest
+      var alpha = (CFG.weight / L) * Math.sin(REST - theta) // gravity, straight down
         + (s * a.x - c * a.y) / L                            // inertia from the mouse accelerating
         + (CFG.drag / L) * (s * vs.x - c * vs.y)             // air drag: trails while moving
         - damp * w;                                          // friction
-      w = Math.max(-0.7, Math.min(0.7, w + alpha));
+      w = Math.max(-0.6, Math.min(0.6, w + alpha));
       theta += w;
     }
 
@@ -87,15 +95,13 @@
       } else if (mode === 'settling') {
         target = now - settleStart > CFG.fadeHold ? 0 : 1;
       }
-      op += (target - op) * (target > op ? 0.22 : CFG.fadeOut);
+      op += (target - op) * (target > op ? 0.35 : CFG.fadeOut);
 
       if (mode === 'settling' && target === 0 && op < 0.01) {
         op = 0; mode = 'hidden'; theta = REST; w = 0;
       }
 
-      el.style.opacity = op.toFixed(3);
-      el.style.transform = 'translate(' + p.x.toFixed(1) + 'px,' + p.y.toFixed(1) + 'px) rotate(' +
-        (theta * 180 / Math.PI - 45).toFixed(2) + 'deg)';
+      draw();
 
       if (mode === 'hidden') { running = false; return; }
       requestAnimationFrame(tick);
@@ -118,6 +124,7 @@
         start();
       }
       p = { x: x, y: y };
+      draw(); // move the tip immediately rather than on the next frame
     }, { passive: true });
 
     document.addEventListener('mouseleave', function () {
